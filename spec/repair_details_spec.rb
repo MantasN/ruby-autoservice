@@ -9,8 +9,8 @@ describe RepairDetails do
   context 'when requesting string representation' do
     it 'returns formatted string with car and owner' do
       expect(repair_details.to_s)
-        .to eq("[Reason: #{repair_details.reason}; " \
-"Car: #{repair_details.car}; Owner: #{repair_details.owner}]")
+        .to eq('[Reason: need to change tires; ' \
+'Car: VW GOLF 6; Owner: Mantas Neviera]')
     end
   end
 end

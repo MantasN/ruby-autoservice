@@ -1,5 +1,6 @@
 require 'rspec'
 require 'data_repository'
+require 'repair_details'
 
 describe DataRepository do
   DR_TEST_PATH = 'dr_test_tmp'.freeze
@@ -9,7 +10,7 @@ describe DataRepository do
   end
 
   let(:data) do
-    %w(data1 data2)
+    { key1: 'value1', key2: 'value2' }
   end
 
   after(:each) do

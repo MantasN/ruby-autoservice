@@ -120,6 +120,12 @@ describe RepairReport do
       expect(repair_report.bill.length).to eq(4)
     end
 
+    it 'must contain exact titles' do
+      expect(repair_report.bill)
+        .to include('Timing belts change', 'Timing belt',
+                    'Water pump', 'Bearing')
+    end
+
     it 'total price must be 300' do
       expect(repair_report.bill.values).to eq_array_sum(300)
     end
@@ -150,6 +156,11 @@ describe RepairReport do
     it 'must do not set less than 0' do
       repair_report.car_mileage = -1
       expect(repair_report.car_mileage).to be_nil
+    end
+
+    it 'must allow 0' do
+      repair_report.car_mileage = 0
+      expect(repair_report.car_mileage).to eq(0)
     end
   end
 

@@ -27,6 +27,10 @@ describe RepairOrder do
       expect(repair_order.state).to eq(:pending)
     end
 
+    it 'must return today as repair date' do
+      expect(repair_order.date).to eq(Date.today)
+    end
+
     it 'must allow to change the repair date' do
       repair_order.date = tomorrow = Date.today + 1
       expect(repair_order.date).to eq tomorrow
@@ -38,7 +42,7 @@ describe RepairOrder do
 
     it 'must not let to assign repair report' do
       expect { repair_order.report = RepairReport.new }
-        .to raise_error(RuntimeError)
+        .to raise_error('report can only be assigned to ongoing order')
     end
 
     it 'must return specified details' do
@@ -59,7 +63,7 @@ describe RepairOrder do
 
     it 'must complain when changing the repair date' do
       expect { repair_order.date = Date.today + 1 }
-        .to raise_error(RuntimeError)
+        .to raise_error('only pending order date can be changed')
     end
 
     it 'must let to assign repair report' do
@@ -79,12 +83,12 @@ describe RepairOrder do
 
     it 'must complain when changing the repair date' do
       expect { repair_order.date = Date.today + 1 }
-        .to raise_error(RuntimeError)
+        .to raise_error('only pending order date can be changed')
     end
 
     it 'must not let to assign repair report' do
       expect { repair_order.report = RepairReport.new }
-        .to raise_error(RuntimeError)
+        .to raise_error('report can only be assigned to ongoing order')
     end
   end
 end
