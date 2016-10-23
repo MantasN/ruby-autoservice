@@ -1,12 +1,12 @@
 # This is the repair order class which holds the
 # client, car, order state and repair report
 class RepairOrder
-  attr_reader :state, :date, :report, :reason
+  attr_reader :state, :date, :report, :repair_details
 
-  def initialize(date, reason)
+  def initialize(date, repair_details)
     @state = :pending
     @date = date
-    @reason = reason
+    @repair_details = repair_details
   end
 
   def date=(date)

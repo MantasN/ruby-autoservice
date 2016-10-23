@@ -1,10 +1,25 @@
 require 'rspec'
 require 'repair_order'
 require 'repair_report'
+require 'repair_details'
+
+RSpec::Matchers.define :eq_details do |expected_details|
+  match do |details|
+    details.reason == expected_details.reason &&
+      details.car == expected_details.car &&
+      details.owner == expected_details.owner
+  end
+
+  diffable
+end
 
 describe RepairOrder do
   let(:repair_order) do
-    described_class.new(Date.today, 'need to change brake pads')
+    described_class.new(
+      Date.today,
+      RepairDetails.new('need to change brake pads',
+                        'VW GOLF 6', 'Mantas Neviera')
+    )
   end
 
   context 'newly created' do
@@ -26,8 +41,10 @@ describe RepairOrder do
         .to raise_error(RuntimeError)
     end
 
-    it 'must return specified repair reason' do
-      expect(repair_order.reason).to eq('need to change brake pads')
+    it 'must return specified details' do
+      expect(repair_order.repair_details)
+        .to eq_details(RepairDetails.new('need to change brake pads',
+                                         'VW GOLF 6', 'Mantas Neviera'))
     end
   end
 

@@ -1,5 +1,4 @@
 require_relative 'data_repository'
-require_relative 'repair_order'
 
 # This class provides the possibility to interact with orders
 # store, add, delete and retrieve
@@ -11,13 +10,29 @@ class OrdersManager
     @orders = @data_repository.load_data || []
   end
 
-  def add_new_order(date, reason)
-    @orders.push(RepairOrder.new(date, reason))
+  def add_new_order(order)
+    @orders.push(order)
     save
   end
 
   def remove_order_at_position(position)
     @orders.delete_at(position)
+    save
+  end
+
+  def update_date(index, new_date)
+    selected_order = @orders[index]
+    selected_order.date = new_date unless selected_order.state != :pending
+    save
+  end
+
+  def mark_as_ongoing(index)
+    @orders[index].ongoing
+    save
+  end
+
+  def mark_as_completed(index)
+    @orders[index].completed
     save
   end
 

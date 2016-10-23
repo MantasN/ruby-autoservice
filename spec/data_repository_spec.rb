@@ -2,10 +2,10 @@ require 'rspec'
 require 'data_repository'
 
 describe DataRepository do
-  PATH = 'test_tmp'.freeze
+  DR_TEST_PATH = 'dr_test_tmp'.freeze
 
   let(:data_repository) do
-    described_class.new(PATH)
+    described_class.new(DR_TEST_PATH)
   end
 
   let(:data) do
@@ -13,7 +13,7 @@ describe DataRepository do
   end
 
   after(:each) do
-    FileUtils.rm_r(PATH) if File.exist?(PATH)
+    FileUtils.rm_r(DR_TEST_PATH) if File.exist?(DR_TEST_PATH)
   end
 
   context 'when db file could not be found' do
