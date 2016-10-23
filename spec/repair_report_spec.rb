@@ -3,6 +3,12 @@ require 'repair_report'
 require 'repair_job'
 require 'repair_part'
 
+RSpec::Matchers.define :eq_array_sum do |sum|
+  match do |array|
+    array.reduce(0, &:+) == sum
+  end
+end
+
 describe RepairReport do
   let(:repair_report) do
     described_class.new
@@ -115,7 +121,7 @@ describe RepairReport do
     end
 
     it 'total price must be 300' do
-      expect(repair_report.bill.values.reduce(0, &:+)).to eq(300)
+      expect(repair_report.bill.values).to eq_array_sum(300)
     end
   end
 
@@ -127,7 +133,7 @@ describe RepairReport do
 
     it 'total price must be 320' do
       bill = repair_report.bill { |price| price * 0.8 }
-      expect(bill.values.reduce(0, &:+)).to eq(320)
+      expect(bill.values).to eq_array_sum(320)
     end
 
     it 'must apply discount for tires change and tires price' do
