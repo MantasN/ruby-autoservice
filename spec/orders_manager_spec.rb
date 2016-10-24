@@ -81,10 +81,39 @@ describe OrdersManager do
   end
 
   context 'when second manager was created' do
-    it 'must contain same order' do
+    it 'must contain same orders if new was added' do
       orders_manager.add_new_order(first_order)
       new_orders_manager = described_class.new(DataRepository.new(OM_TEST_PATH))
       expect(new_orders_manager.orders[0]).to eq_order(first_order)
+    end
+
+    it 'must contain same orders if one was removed' do
+      orders_manager.add_new_order(first_order)
+      orders_manager.add_new_order(second_order)
+      orders_manager.remove_order_at_position(0)
+      new_orders_manager = described_class.new(DataRepository.new(OM_TEST_PATH))
+      expect(new_orders_manager.orders[0]).to eq_order(second_order)
+    end
+
+    it 'must return newest date if it was updated' do
+      orders_manager.add_new_order(first_order)
+      orders_manager.update_date(0, Date.today + 1)
+      new_orders_manager = described_class.new(DataRepository.new(OM_TEST_PATH))
+      expect(new_orders_manager.orders[0].date).to eq(Date.today + 1)
+    end
+
+    it 'must return ongoing state if it was updated' do
+      orders_manager.add_new_order(first_order)
+      orders_manager.mark_as_ongoing(0)
+      new_orders_manager = described_class.new(DataRepository.new(OM_TEST_PATH))
+      expect(new_orders_manager.orders[0].state).to eq(:ongoing)
+    end
+
+    it 'must return completed state if it was updated' do
+      orders_manager.add_new_order(first_order)
+      orders_manager.mark_as_completed(0)
+      new_orders_manager = described_class.new(DataRepository.new(OM_TEST_PATH))
+      expect(new_orders_manager.orders[0].state).to eq(:completed)
     end
   end
 

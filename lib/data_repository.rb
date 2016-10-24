@@ -9,7 +9,7 @@ class DataRepository
   end
 
   def save_data(data)
-    FileUtils.mkdir_p(@db_path) unless File.exist?(@db_path)
+    FileUtils.mkdir_p(@db_path)
     File.open(db_file_path, 'w') { |file| file.write(YAML.dump(data)) }
   end
 

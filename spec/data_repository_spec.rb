@@ -29,4 +29,10 @@ describe DataRepository do
       expect(data_repository.load_data).to eq(data)
     end
   end
+
+  context 'when trying to get full db path' do
+    it 'must return path to db.yaml file in provided path' do
+      expect(data_repository.db_file_path).to eq(DR_TEST_PATH + '/db.yaml')
+    end
+  end
 end

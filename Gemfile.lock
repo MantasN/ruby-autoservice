@@ -125,6 +125,7 @@ DEPENDENCIES
   mutant-rspec
   reek
   rspec
+  rubocop
   rubocop-rspec
   simplecov
 
