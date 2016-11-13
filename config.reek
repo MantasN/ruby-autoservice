@@ -1,0 +1,18 @@
+exclude_paths:
+  - bin/
+  - config/
+  - coverage/
+  - db/
+  - lib/
+  - log/
+  - public/
+  - test/
+  - tmp/
+  - vendor/
+  - app/assets/
+  - app/channels/
+  - app/controllers/
+  - app/helpers/
+  - app/jobs/
+  - app/mailers/
+  - app/views/

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reason: MyString
+  car: MyString
+  owner: MyString
+  order: one
+
+two:
+  reason: MyString
+  car: MyString
+  owner: MyString
+  order: two

@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+air_filter:
+  title: Air filter
+  quantity: 3
+  prime_price: 15
+  client_price: 20
+  report: nil

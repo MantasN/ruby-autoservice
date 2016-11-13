@@ -1,0 +1,12 @@
+sudo rails g model Order date:date state:string
+sudo rails g model Detail reason car owner order:references:uniq
+sudo rails g model Report car_mileage comment order:references:uniq
+sudo rails g model Job title price:decimal report:references
+sudo rails g model Part title quantity:integer prime_price:decimal client_price:decimal report:references
+sudo rake db:migrate
+
+
+sudo rails g migration RemoveCarMileageFromReport car_mileage:string
+sudo rails g migration AddCarMileageToReport car_mileage:integer
+sudo rake db:migrate
+
