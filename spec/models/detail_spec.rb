@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Detail, :type => :model do
+describe Detail, type: :model do
   fixtures :all
 
   context 'when requesting string representation' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Part, :type => :model do
+describe Part, type: :model do
   fixtures :all
 
   let(:part) do

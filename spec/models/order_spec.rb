@@ -10,7 +10,7 @@ RSpec::Matchers.define :eq_details do |expected_details|
   diffable
 end
 
-describe Order, :type => :model do
+describe Order, type: :model do
   fixtures :all
 
   let(:order) do
@@ -36,19 +36,20 @@ describe Order, :type => :model do
     end
 
     it 'must not let to assign repair report' do
-      expect { order.report = double('report') }
+      expect { order.report = instance_double('Report') }
         .to raise_error('report can only be assigned to ongoing order')
     end
 
     it 'must return specified details' do
       expect(order.detail)
-        .to eq_details(double('detail', :reason => 'need to change tires',
-                                         :car => 'VW GOLF 6', :owner => 'Mantas Neviera'))
+        .to eq_details(instance_double('Detail', reason: 'need to change tires',
+                                                 car: 'VW GOLF 6',
+                                                 owner: 'Mantas Neviera'))
     end
   end
 
   context 'marked as ongoing' do
-    before(:each) do
+    before do
       order.ongoing
     end
 
@@ -66,9 +67,9 @@ describe Order, :type => :model do
       expect(order.report).to eq(repair_report)
     end
   end
-#
+
   context 'marked as completed' do
-    before(:each) do
+    before do
       order.completed
     end
 
@@ -82,7 +83,7 @@ describe Order, :type => :model do
     end
 
     it 'must not let to assign repair report' do
-      expect { order.report = double('report') }
+      expect { order.report = instance_double('Report') }
         .to raise_error('report can only be assigned to ongoing order')
     end
   end

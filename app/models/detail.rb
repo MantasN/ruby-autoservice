@@ -5,6 +5,6 @@ class Detail < ApplicationRecord
   validates :reason, :car, :owner, presence: true
 
   def to_s
-    "[Reason: #{self.reason}; Car: #{self.car}; Owner: #{self.owner}]"
+    "[Reason: #{reason}; Car: #{car}; Owner: #{owner}]"
   end
 end

@@ -6,7 +6,7 @@ RSpec::Matchers.define :eq_array_sum do |sum|
   end
 end
 
-describe Report, :type => :model do
+describe Report, type: :model do
   let(:report) do
     described_class.new
   end
@@ -53,10 +53,11 @@ describe Report, :type => :model do
     end
 
     let(:brake_pad_part) do
-      Part.new(title: 'Brake pads', quantity: 2, prime_price: 10, client_price: 20)
+      Part.new(title: 'Brake pads', quantity: 2,
+               prime_price: 10, client_price: 20)
     end
 
-    before(:each) do
+    before do
       report.add_completed_job(brake_pads_job)
       report.add_used_part(brake_pad_part)
     end
@@ -90,10 +91,11 @@ describe Report, :type => :model do
     end
 
     let(:oil_part) do
-      Part.new(title: 'Oil', quantity: 1, prime_price: 20, client_price: 25)
+      Part.new(title: 'Oil', quantity: 1,
+               prime_price: 20, client_price: 25)
     end
 
-    before(:each) do
+    before do
       report.add_completed_job(oil_job)
       report.add_used_part(oil_part)
       report.remove_job(oil_job)
@@ -119,18 +121,21 @@ describe Report, :type => :model do
     end
 
     let(:timing_belt) do
-      Part.new(title: 'Timing belt', quantity: 1, prime_price: 30, client_price: 40)
+      Part.new(title: 'Timing belt', quantity: 1,
+               prime_price: 30, client_price: 40)
     end
 
     let(:water_pump) do
-      Part.new(title: 'Water pump', quantity: 1, prime_price: 50, client_price: 70)
+      Part.new(title: 'Water pump', quantity: 1,
+               prime_price: 50, client_price: 70)
     end
 
     let(:bearing) do
-      Part.new(title: 'Bearing', quantity: 2, prime_price: 25, client_price: 40)
+      Part.new(title: 'Bearing', quantity: 2,
+               prime_price: 25, client_price: 40)
     end
 
-    before(:each) do
+    before do
       report.add_completed_job(job)
       report.add_used_part(timing_belt)
       report.add_used_part(water_pump)
@@ -161,7 +166,7 @@ describe Report, :type => :model do
       Part.new(title: 'Tire', quantity: 4, prime_price: 80, client_price: 95)
     end
 
-    before(:each) do
+    before do
       report.add_completed_job(tires_change)
       report.add_used_part(tires)
     end
@@ -181,16 +186,6 @@ describe Report, :type => :model do
       report.car_mileage = 150_000
       expect(report.car_mileage).to eq(150_000)
     end
-
-    it 'must do not set less than 0' do
-      report.car_mileage = -1
-      expect(report.car_mileage).to be_nil
-    end
-
-    it 'must allow 0' do
-      report.car_mileage = 0
-      expect(report.car_mileage).to eq(0)
-    end
   end
 
   context 'setting the comment' do
@@ -198,20 +193,17 @@ describe Report, :type => :model do
       report.comment = 'very unclean'
       expect(report.comment).to eq('very unclean')
     end
-
-    it 'must do not set empty comment' do
-      report.comment = ''
-      expect(report.comment).to be_nil
-    end
   end
 
   context 'prime price' do
     let(:injector) do
-      Part.new(title: 'Injector', quantity: 4, prime_price: 110, client_price: 150)
+      Part.new(title: 'Injector', quantity: 4,
+               prime_price: 110, client_price: 150)
     end
 
     let(:fuel_filter) do
-      Part.new(title: 'Fuel filter', quantity: 1, prime_price: 60, client_price: 70)
+      Part.new(title: 'Fuel filter', quantity: 1,
+               prime_price: 60, client_price: 70)
     end
 
     context 'with no parts' do
@@ -221,7 +213,7 @@ describe Report, :type => :model do
     end
 
     context 'with parts added' do
-      before(:each) do
+      before do
         report.add_used_part(injector)
         report.add_used_part(fuel_filter)
       end
@@ -236,17 +228,18 @@ describe Report, :type => :model do
       end
 
       it 'must call job total prime price on fuel_filter once' do
-        expect(fuel_filter).to receive(:total_prime_price).once.and_call_original
+        expect(fuel_filter)
+          .to receive(:total_prime_price).once.and_call_original
         report.parts_total_prime_price
       end
 
       it 'must do not call job total price on injector' do
-        expect(injector).to_not receive(:total_price)
+        expect(injector).not_to receive(:total_price)
         report.parts_total_prime_price
       end
 
       it 'must do not call job total price on fuel_filter' do
-        expect(fuel_filter).to_not receive(:total_price)
+        expect(fuel_filter).not_to receive(:total_price)
         report.parts_total_prime_price
       end
     end

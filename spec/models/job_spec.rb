@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Job, :type => :model do
+describe Job, type: :model do
   fixtures :all
 
   let(:job) do

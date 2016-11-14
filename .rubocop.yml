@@ -10,6 +10,8 @@ AllCops:
     - 'log/*'
     - 'public/*'
     - 'test/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
     - 'tmp/*'
     - 'vendor/*'
     - 'app/assets/*'

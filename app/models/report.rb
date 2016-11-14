@@ -5,66 +5,60 @@ class Report < ApplicationRecord
   belongs_to :order
   has_many :jobs, dependent: :destroy
   has_many :parts, dependent: :destroy
+  validates :car_mileage,
+            numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
   def completed_jobs_count
-    self.jobs.length
+    jobs.length
   end
 
   def used_parts_count
-    self.parts.map(&:quantity).reduce(0, &:+)
+    parts.map(&:quantity).reduce(0, &:+)
   end
 
   def foreach_completed_job
-    self.jobs.each { |job| yield(job) }
+    jobs.each { |job| yield(job) }
   end
 
   def foreach_used_part
-    self.parts.each { |part| yield(part) }
+    parts.each { |part| yield(part) }
   end
 
   def add_completed_job(job)
-    self.jobs.concat(job)
+    jobs.concat(job)
   end
 
   def add_used_part(part)
-    self.parts.concat(part)
+    parts.concat(part)
   end
 
   def remove_job(job)
-    self.jobs.delete(job)
+    jobs.delete(job)
   end
 
   def remove_part(part)
-    self.parts.delete(part)
+    parts.delete(part)
   end
 
   def parts_total_prime_price
-    self.parts.map(&:total_prime_price).reduce(0, &:+)
+    parts.map(&:total_prime_price).reduce(0, &:+)
   end
 
   def total_price
-    self.jobs.map(&:price).reduce(0, &:+) +
-        self.parts.map(&:total_price).reduce(0, &:+)
+    jobs.map(&:price).reduce(0, &:+) +
+      parts.map(&:total_price).reduce(0, &:+)
   end
 
   def bill(&discount_block)
-    jobs_bill = self.jobs.map do |job|
+    jobs_bill = jobs.map do |job|
       [job.title, apply_discount(job.price, &discount_block)]
     end.to_h
 
-    parts_bill = self.parts.map do |part|
+    parts_bill = parts.map do |part|
       [part.title, apply_discount(part.total_price, &discount_block)]
     end.to_h
 
     jobs_bill.merge(parts_bill)
-  end
-
-  def car_mileage=(car_mileage)
-    super(car_mileage) if car_mileage >= 0
-  end
-
-  def comment=(comment)
-    super(comment) unless comment.empty?
   end
 
   private
