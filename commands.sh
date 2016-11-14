@@ -16,15 +16,15 @@ case "$choice" in
   c|C )
         rspec;;
   d|D )
-        bundle exec mutant --include app/models/ --require detail.rb --use rspec "Detail*";;
+        RAILS_ENV=test bundle exec mutant -r ./config/environment --jobs 1 --use rspec Detail;;
   e|E )
-        bundle exec mutant --include app/models/ --require job.rb --use rspec "Job*";;
+        RAILS_ENV=test bundle exec mutant -r ./config/environment --jobs 1 --use rspec Job;;
   f|F )
-        bundle exec mutant --include app/models/ --require order.rb --use rspec "Part*";;
+        RAILS_ENV=test bundle exec mutant -r ./config/environment --jobs 1 --use rspec Part;;
   g|G )
-        bundle exec mutant --include app/models/ --require part.rb --use rspec "Order*";;
+        RAILS_ENV=test bundle exec mutant -r ./config/environment --jobs 1 --use rspec Order;;
   h|H )
-        bundle exec mutant --include app/models/ --require report.rb --use rspec "Report*";;
+        RAILS_ENV=test bundle exec mutant -r ./config/environment --jobs 1 --use rspec Report;;
   * )
         echo "Invalid letter pressed!"
         exit;;

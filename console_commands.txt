@@ -1,0 +1,5 @@
+ui = UserInterface.new
+ui.show_main_menu
+
+ActiveRecord::Base.logger.level = 1 - disable SQL
+ActiveRecord::Base.logger.level = 0 - enable SQL

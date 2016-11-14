@@ -8,12 +8,14 @@ class Order < ApplicationRecord
   validates :state, inclusion: %w(pending ongoing completed)
 
   def date=(date)
-    raise 'only pending order date can be changed' if state != 'pending'
+    error_message = 'only pending order date can be changed'
+    raise error_message if state != 'pending' && !new_record?
     super(date)
   end
 
   def report=(report)
-    raise 'report can only be assigned to ongoing order' if state != 'ongoing'
+    error_message = 'report can only be assigned to ongoing order'
+    raise error_message if state != 'ongoing'
     super(report)
   end
 
@@ -28,6 +30,6 @@ class Order < ApplicationRecord
   protected
 
   def set_pending_state
-    self.state = 'pending'
+    self.state = 'pending' if new_record?
   end
 end
