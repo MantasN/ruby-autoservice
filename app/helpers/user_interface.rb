@@ -25,8 +25,7 @@ class UserInterface
     car_info = user_input('car info')
     client_info = user_input('client info')
     @orders_manager.add_new_order(Date.strptime(repair_date, '%Y%m%d'),
-                      Detail.new(reason: repair_reason, car: car_info, owner: client_info)
-    )
+                                  repair_reason, car_info, client_info)
   end
 
   def show_all_repair_orders

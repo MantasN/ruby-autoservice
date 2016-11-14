@@ -5,8 +5,9 @@ class OrdersManager
     Order.all
   end
 
-  def add_new_order(date, detail)
-    order = Order.new(date: date, detail: detail)
+  def add_new_order(date, repair_reason, car_info, client_info)
+    order = Order.new(date: date,
+                      detail: Detail.new(reason: repair_reason, car: car_info, owner: client_info))
     order.save
   end
 
