@@ -4,7 +4,7 @@ clear
 
 echo -e "Command: \nA. Reek\nB. Rubocop\nC. RSpec\n"
 echo -e "D. Mutant detail.rb\nE. Mutant job.rb"
-echo -e "F. Mutant order.rb\nG. Mutant part.rb\nH. Mutant _report.rb\n"
+echo -e "F. Mutant part.rb\nG. Mutant order.rb\nH. Mutant report.rb\n"
 
 read -p "Select command [A, B, ...]: " choice
 

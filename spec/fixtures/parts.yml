@@ -6,3 +6,24 @@ air_filter:
   prime_price: 15
   client_price: 20
   report: nil
+
+brake_pad:
+  title: Brake pads
+  quantity: 2
+  prime_price: 10
+  client_price: 20
+  report: nil
+
+water_pump:
+  title: Water pump
+  quantity: 1
+  prime_price: 50
+  client_price: 70
+  report: nil
+
+bearing:
+  title: Bearing
+  quantity: 2
+  prime_price: 25
+  client_price: 40
+  report: nil
