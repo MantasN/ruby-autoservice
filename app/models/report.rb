@@ -5,7 +5,7 @@ class Report < ApplicationRecord
   belongs_to :order
   has_many :jobs, dependent: :destroy
   has_many :parts, dependent: :destroy
-  after_initialize :show_prime_prices
+  after_initialize :show_prime_for_new
   validates :car_mileage,
             numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :hide_prime, inclusion: { in: [true, false] }
@@ -81,5 +81,9 @@ class Report < ApplicationRecord
   def apply_discount(price)
     return yield price if block_given?
     price
+  end
+
+  def show_prime_for_new
+    self.hide_prime = false if new_record?
   end
 end

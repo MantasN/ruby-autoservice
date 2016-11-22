@@ -160,7 +160,6 @@ describe Report, type: :model do
     context 'with no parts' do
       context 'when prime prices are shown' do
         it 'must return zero' do
-          report.show_prime_prices
           expect(report.parts_total_prime_price).to eq(0)
         end
       end
