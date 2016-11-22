@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161113161908) do
+ActiveRecord::Schema.define(version: 20161122151237) do
 
   create_table "details", force: :cascade do |t|
     t.string   "reason"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20161113161908) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "car_mileage"
+    t.boolean  "hide_prime"
     t.index ["order_id"], name: "index_reports_on_order_id", unique: true
   end
 

@@ -10,3 +10,5 @@ sudo rails g migration RemoveCarMileageFromReport car_mileage:string
 sudo rails g migration AddCarMileageToReport car_mileage:integer
 sudo rake db:migrate
 
+sudo rails g migration AddHidePrimeToReport hide_prime:boolean
+sudo rake db:migrate

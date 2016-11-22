@@ -5,8 +5,19 @@ class Report < ApplicationRecord
   belongs_to :order
   has_many :jobs, dependent: :destroy
   has_many :parts, dependent: :destroy
+  after_initialize :show_prime_prices
   validates :car_mileage,
             numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :hide_prime, inclusion: { in: [true, false] }
+  validates :hide_prime, exclusion: { in: [nil] }
+
+  def hide_prime_prices
+    self.hide_prime = true
+  end
+
+  def show_prime_prices
+    self.hide_prime = false
+  end
 
   def completed_jobs_count
     jobs.length
@@ -41,7 +52,11 @@ class Report < ApplicationRecord
   end
 
   def parts_total_prime_price
-    parts.map(&:total_prime_price).reduce(0, &:+)
+    if !hide_prime
+      parts.map(&:total_prime_price).reduce(0, &:+)
+    else
+      parts.map(&:total_price).reduce(0, &:+)
+    end
   end
 
   def total_price

@@ -47,6 +47,10 @@ describe Report, type: :model do
     it 'comment must be nil' do
       expect(report.comment).to be_nil
     end
+
+    it 'hide prime must be false' do
+      expect(report.hide_prime).to be false
+    end
   end
 
   context 'job and used part were added' do
@@ -154,8 +158,18 @@ describe Report, type: :model do
 
   context 'prime price' do
     context 'with no parts' do
-      it 'must return zero' do
-        expect(report.parts_total_prime_price).to eq(0)
+      context 'when prime prices are shown' do
+        it 'must return zero' do
+          report.show_prime_prices
+          expect(report.parts_total_prime_price).to eq(0)
+        end
+      end
+
+      context 'when prime prices are hidden' do
+        it 'must return zero' do
+          report.hide_prime_prices
+          expect(report.parts_total_prime_price).to eq(0)
+        end
       end
     end
 
@@ -165,30 +179,76 @@ describe Report, type: :model do
         report.add_used_part(parts(:air_filter))
       end
 
-      it 'must return the total prime price of the added parts' do
-        expect(report.parts_total_prime_price).to eq(65)
+      context 'when prime prices are shown' do
+        before do
+          report.show_prime_prices
+        end
+
+        it 'hide prime must be false' do
+          expect(report.hide_prime).to be false
+        end
+
+        it 'must return the total prime price of the added parts' do
+          expect(report.parts_total_prime_price).to eq(65)
+        end
+
+        it 'must call total prime price on brake pad once' do
+          expect(parts(:brake_pad))
+            .to receive(:prime_price).once.and_call_original
+          report.parts_total_prime_price
+        end
+
+        it 'must call total prime price on air filter once' do
+          expect(parts(:air_filter))
+            .to receive(:prime_price).once.and_call_original
+          report.parts_total_prime_price
+        end
+
+        it 'must do not call total price on brake pad' do
+          expect(parts(:brake_pad)).not_to receive(:client_price)
+          report.parts_total_prime_price
+        end
+
+        it 'must do not call total price on air filter' do
+          expect(parts(:air_filter)).not_to receive(:client_price)
+          report.parts_total_prime_price
+        end
       end
 
-      it 'must call job total prime price on brake pad once' do
-        expect(parts(:brake_pad))
-          .to receive(:total_prime_price).once.and_call_original
-        report.parts_total_prime_price
-      end
+      context 'when prime prices are hidden' do
+        before do
+          report.hide_prime_prices
+        end
 
-      it 'must call job total prime price on air filter once' do
-        expect(parts(:air_filter))
-          .to receive(:total_prime_price).once.and_call_original
-        report.parts_total_prime_price
-      end
+        it 'hide prime must be true' do
+          expect(report.hide_prime).to be true
+        end
 
-      it 'must do not call job total price on brake pad' do
-        expect(parts(:brake_pad)).not_to receive(:total_price)
-        report.parts_total_prime_price
-      end
+        it 'must return the total client price instead of prime price' do
+          expect(report.parts_total_prime_price).to eq(100)
+        end
 
-      it 'must do not call job total price on air filter' do
-        expect(parts(:air_filter)).not_to receive(:total_price)
-        report.parts_total_prime_price
+        it 'must call client price on brake pad once' do
+          expect(parts(:brake_pad))
+            .to receive(:client_price).once.and_call_original
+          report.parts_total_prime_price
+        end
+
+        it 'must call client price on air filter once' do
+          expect(parts(:air_filter))
+            .to receive(:client_price).once.and_call_original
+          report.parts_total_prime_price
+        end
+
+        it 'must do not call prime price on brake pad' do
+          expect(parts(:brake_pad)).not_to receive(:prime_price)
+          report.parts_total_prime_price
+        end
+
+        it 'must do not call prime price on air filter' do
+          expect(parts(:air_filter)).not_to receive(:prime_price)
+          report.parts_total_prime_price
+        end
       end
     end
   end
