@@ -1,0 +1,43 @@
+<h1>Edit Order</h1>
+<%= form_for @order, url: order_path(@order), method: :patch do |f| %>
+    <% if @order.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@order.errors.count, 'error') %> prohibited
+            this order from being saved:
+          </h2>
+          <ul>
+            <% @order.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+      <%= f.label :date %><br>
+      <%= f.date_select :date %>
+    </p>
+
+    <%= f.fields_for :detail do |ff| %>
+        <p>
+          <%= ff.label :reason %><br>
+          <%= ff.text_area :reason %>
+        </p>
+
+        <p>
+          <%= ff.label :car %><br>
+          <%= ff.text_area :car %>
+        </p>
+
+        <p>
+          <%= ff.label :owner %><br>
+          <%= ff.text_area :owner %>
+        </p>
+    <% end %>
+
+    <p>
+      <%= f.submit 'Save'%>
+      <%= link_to 'Back', :back %>
+    </p>
+<% end %>

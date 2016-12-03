@@ -1,11 +1,12 @@
 # This is the repair order class which holds the
 # client, car, order state and repair report
 class Order < ApplicationRecord
-  has_one :detail, dependent: :destroy
+  has_one :detail, inverse_of: :order, dependent: :destroy
   has_one :report, dependent: :destroy
   after_initialize :set_pending_state
   validates :date, presence: true
   validates :state, inclusion: %w(pending ongoing completed)
+  accepts_nested_attributes_for :detail, allow_destroy: true
 
   def date=(date)
     error_message = 'only pending order date can be changed'
