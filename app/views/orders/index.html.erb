@@ -1,26 +1,40 @@
-<h1>All orders</h1>
-<p>
-  <%= link_to 'New order', new_order_path %>
-</p>
+<div class="container">
+  <div class="page-header">
+    <h1>All orders</h1>
+  </div>
+  <p>
+    <%= link_to 'New order', new_order_path, class: 'btn btn-primary'%>
+  </p>
 
-<table border="1">
-  <tr>
-    <th>Date</th>
-    <th>State</th>
-    <th>Reason</th>
-    <th colspan="3">Actions</th>
-  </tr>
-
-  <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.date %></td>
-        <td><%= order.state %></td>
-        <td><%= order.detail.reason %></td>
-        <td><%= link_to 'Details', order_path(order) %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Delete', order_path(order),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <% if flash[:error] %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+          <li><%= flash[:error] %></li>
+      </ul>
+    </div>
   <% end %>
-</table>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>State</th>
+        <th>Reason</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+
+    <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.date %></td>
+          <td><%= order.state %></td>
+          <td><%= order.detail.reason %></td>
+          <td><%= link_to 'Details', order_path(order) %></td>
+          <td><%= link_to 'Edit', edit_order_path(order) %></td>
+          <td><%= link_to 'Delete', order_path(order),
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>

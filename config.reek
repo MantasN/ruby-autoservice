@@ -5,7 +5,6 @@ exclude_paths:
   - app/helpers/
   - app/jobs/
   - app/mailers/
-  - app/views/
   - bin/
   - config/
   - coverage/

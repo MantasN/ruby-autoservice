@@ -5,14 +5,14 @@ air_filter:
   quantity: 3
   prime_price: 15
   client_price: 20
-  report: nil
+  report: report
 
 brake_pad:
   title: Brake pads
   quantity: 2
   prime_price: 10
   client_price: 20
-  report: nil
+  report: report
 
 water_pump:
   title: Water pump

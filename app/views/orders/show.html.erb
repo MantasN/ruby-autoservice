@@ -1,26 +1,51 @@
-<h1>Order details</h1>
-<%= form_for @order, url: order_path(@order), method: :patch do |f| %>
-<p>
-  <strong>Repair Date:</strong>
-  <%= @order.date %>
-</p>
-<p>
-  <strong>State:</strong>
-  <%= f.select :state, options_for_select(%w[pending ongoing completed], @order.state), {}, {onChange: 'this.form.submit();'} %>
-</p>
-<p>
-  <strong>Reason:</strong>
-  <%= @order.detail.reason %>
-</p>
-<p>
-  <strong>Car:</strong>
-  <%= @order.detail.car %>
-</p>
-<p>
-  <strong>Owner:</strong>
-  <%= @order.detail.owner %>
-</p>
-<% end %>
-<p>
-<%= link_to '<< All orders', orders_path %>
-</p>
+<div class="container">
+  <div class="page-header">
+    <h1>Order details</h1>
+  </div>
+
+  <% if flash[:error] %>
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li><%= flash[:error] %></li>
+        </ul>
+      </div>
+  <% end %>
+
+  <%= form_for @order do |f| %>
+  <p>
+    <strong>Repair Date:</strong>
+    <%= @order.date %>
+  </p>
+  <p>
+    <strong>State:</strong>
+    <%= f.select :state, options_for_select(%w[pending ongoing completed], @order.state), {}, {onChange: 'this.form.submit();'} %>
+  </p>
+  <p>
+    <strong>Reason:</strong>
+    <%= @order.detail.reason %>
+  </p>
+  <p>
+    <strong>Car:</strong>
+    <%= @order.detail.car %>
+  </p>
+  <p>
+    <strong>Owner:</strong>
+    <%= @order.detail.owner %>
+  </p>
+  <% end %>
+  <p>
+    <strong>Report:</strong>
+    <% if @order.report.nil? %>
+      <td><%= link_to 'Assign', new_order_report_path(@order), class: 'btn btn-success'%></td>
+    <% else %>
+        <td><%= link_to 'Show', order_report_path(@order), class: 'btn btn-primary'%></td>
+        <td><%= link_to 'Delete', order_report_path(@order),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' },
+                        class: 'btn btn-danger'%></td>
+    <% end %>
+  </p>
+  <p>
+  <%= link_to '<< All orders', orders_path %>
+  </p>
+</div>

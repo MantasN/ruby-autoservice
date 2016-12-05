@@ -3,7 +3,7 @@
 air_filter:
   title: Air filter change
   price: 20
-  report: nil
+  report: report
 
 brake_pad:
   title: Brake pads change

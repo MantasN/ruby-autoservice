@@ -5,3 +5,9 @@ detail:
   car: VW GOLF 6
   owner: Mantas Neviera
   order: ongoing_order
+
+detail_second:
+  reason: do not start
+  car: BMW E46
+  owner: Marius
+  order: completed_order

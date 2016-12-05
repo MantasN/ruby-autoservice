@@ -2,7 +2,7 @@
 # about the completed job and provide methods
 # to calculate total price, apply discount and so on
 class Report < ApplicationRecord
-  belongs_to :order
+  belongs_to :order, inverse_of: :report
   has_many :jobs, dependent: :destroy
   has_many :parts, dependent: :destroy
   after_initialize :show_prime_for_new

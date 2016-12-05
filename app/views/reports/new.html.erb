@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="page-header">
+    <h1>New Report</h1>
+  </div>
+  <%= form_for :report, url: order_report_path(@order) do |f| %>
+      <% if @report.errors.any? %>
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              <% @report.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <p>
+        <%= f.label :comment %><br>
+        <%= f.text_area :comment %>
+      </p>
+      <p>
+        <%= f.label :car_mileage %><br>
+        <%= f.number_field :car_mileage %>
+      </p>
+      <p>
+        <%= f.submit 'Add report', class: 'btn btn-success'%>
+        <%= link_to 'Back', :back, class: 'btn btn-danger'%>
+      </p>
+  <% end %>
+</div>

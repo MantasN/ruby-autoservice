@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+report:
+  car_mileage: 10000
+  comment: brake fluid must be changed
+  order: completed_order

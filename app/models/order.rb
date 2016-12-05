@@ -2,7 +2,7 @@
 # client, car, order state and repair report
 class Order < ApplicationRecord
   has_one :detail, inverse_of: :order, dependent: :destroy
-  has_one :report, dependent: :destroy
+  has_one :report, inverse_of: :order, dependent: :destroy
   after_initialize :set_pending_state
   validates :date, presence: true
   validates :state, inclusion: %w(pending ongoing completed)

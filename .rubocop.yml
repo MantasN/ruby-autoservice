@@ -2,11 +2,10 @@ AllCops:
   Exclude:
     - 'app/assets/*'
     - 'app/channels/*'
-    - 'app/controllers/*'
+    - 'app/channels/*/*'
     - 'app/helpers/*'
     - 'app/jobs/*'
     - 'app/mailers/*'
-    - 'app/views/*'
     - 'bin/*'
     - 'config/*'
     - 'config/*/*'
@@ -23,3 +22,4 @@ AllCops:
     - 'vendor/*'
     - 'Rakefile'
     - 'Gemfile'
+  TargetRubyVersion: 2.2
