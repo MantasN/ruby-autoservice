@@ -105,8 +105,13 @@ RSpec.describe OrdersController, type: :controller do
 
   context 'GET #edit' do
     context 'if order have pending state' do
+      let(:order) do
+        double('order', state: 'pending')
+      end
+
       before do
-        process :edit, params: { id: orders(:pending_order) }
+        allow(Order).to receive(:find) { order }
+        process :edit, params: { id: 1 }
       end
 
       it 'responds successfully with an HTTP 200 status code' do
@@ -118,7 +123,7 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it 'assigns the requested order to @order' do
-        expect(assigns(:order)).to eq(orders(:pending_order))
+        expect(assigns(:order)).to eq(order)
       end
 
       it 'do not fill flash[:error]' do
@@ -127,8 +132,13 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     context 'if order have ongoing state' do
+      let(:order) do
+        double('order', state: 'ongoing')
+      end
+
       before do
-        process :edit, params: { id: orders(:ongoing_order) }
+        allow(Order).to receive(:find) { order }
+        process :edit, params: { id: 1 }
       end
 
       it 'responds with an HTTP 302 status code' do
@@ -164,6 +174,14 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   context 'GET #show' do
+    it 'search order by id and assigns to @order' do
+      expect(Order)
+        .to receive(:find).with('100').and_return(orders(:completed_order))
+
+      process :show, params: { id: 100 }
+      expect(assigns(:order)).to eq(orders(:completed_order))
+    end
+
     before do
       process :show, params: { id: orders(:pending_order) }
     end
@@ -200,6 +218,13 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   context 'DELETE #destroy' do
+    it 'call destroy only once' do
+      order = double('order')
+      allow(Order).to receive(:find) { order }
+      expect(order).to receive(:destroy).once
+      process :destroy, params: { id: 1 }
+    end
+
     it 'deletes the order' do
       expect do
         process :destroy, params: { id: orders(:pending_order) }
