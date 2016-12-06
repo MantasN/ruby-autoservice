@@ -51,6 +51,28 @@ RSpec.describe ReportsController, type: :controller do
         expect(orders(:ongoing_order).report).to be_nil
       end
     end
+
+    context 'must check state before creating report' do
+      let(:ongoing_order_params) do
+        { order_id: orders(:ongoing_order), report:
+            { 'comment': 'comment', 'car_mileage': '10000' } }
+      end
+
+      let(:pending_order_params) do
+        { order_id: orders(:pending_order), report:
+            { 'comment': 'comment', 'car_mileage': '10000' } }
+      end
+
+      it 'Report creation must be skipped if state pending' do
+        expect(Report).not_to receive(:new)
+        process :create, params: pending_order_params
+      end
+
+      it 'Report must be created if state is ongoing' do
+        expect(Report).to receive(:new).once.and_call_original
+        process :create, params: ongoing_order_params
+      end
+    end
   end
 
   context 'GET #show' do

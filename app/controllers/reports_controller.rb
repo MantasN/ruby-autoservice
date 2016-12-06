@@ -10,13 +10,17 @@ class ReportsController < ApplicationController
 
   def create
     @order = Order.find(params[:order_id])
-    @report = Report.new(report_params)
-    @report.order = @order
-    if @report.save
-      redirect_to @order
-    else
-      render 'new'
+
+    if @order.state == 'ongoing'
+      @report = Report.new(report_params)
+      @report.order = @order
+      if @report.save
+        redirect_to @order
+        return
+      end
     end
+
+    render 'new'
   end
 
   def destroy
